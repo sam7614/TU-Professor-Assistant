@@ -1,0 +1,5 @@
+{
+  "name": "TU Learning Design AI Assistant-2",
+  "description": "An AI-powered academic curriculum design assistant that helps students explore modules, manage learning history, and design personalized tracks using Gemini 2.5.",
+  "requestFramePermissions": []
+}
