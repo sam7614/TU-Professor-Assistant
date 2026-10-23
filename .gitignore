@@ -40,3 +40,9 @@ ENV/
 
 # Streamlit
 .streamlit/credentials.toml
+
+# Local provenance and credentials (never deployed)
+.local/
+.vercel/
+playwright-report/
+test-results/

@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/sam7614/TU-Professor-Assistant",
+  "sourceCommit": "74d467fb393906dbdc6ee76d898fada810dbb60a",
+  "archivePathAtSourceCommit": "tu-professor-assistant.zip",
+  "archiveSHA256": "d991e48de88e5e97e75b2ff152d23db4c79a2892404156ab1f12ce449822e775",
+  "extractedSHA256BeforeBuildFixes": {
+    "src/types.ts": "019964197968cdc777fb173575cf7ffee8a717666ad468d71ae89f26cf99f449",
+    "src/constants.ts": "5d3b40f98991f71573e4f2d46bd3af780c77b3e174c65855db08f26a47993a02",
+    "src/components/StatCard.tsx": "814f15110621211e8c62978eabf55cc02a619fe979b9b8f518f686bb5895ec47",
+    "src/components/StudentModal.tsx": "d162f5a0cca3f51dd5c02ff8127a5d7e495e40ab6f2fd49ba093468051c3017b",
+    "src/components/PrintableReport.tsx": "7764859d3874af24e0e7f692a98e9790128ea953712994581dc511fdc0e68a48",
+    "src/App.tsx": "d62cbba5eb5f421fee6081d63d217327d91e0d7d7873051b79179dce09c15ecc",
+    "src/components/Dashboard.tsx": "671d25aa5594fd8c61a29ef35ada467a0b707593694ff8a06bcb3e49e99ef4a0",
+    "src/components/StudentManagement.tsx": "2cecd9980a12a5e1cc82e6d0506de1c1420fec2ec2bb6bad10bb6813c2526f48",
+    "src/components/ConsultationAdvisor.tsx": "45d20da56fb28467783fd6137c7b2486af7ff0205d60ea2f6afde1c7b032487d",
+    "src/components/ModuleAnalytics.tsx": "f53d5ee005bc04c6d07780e6abb46d8fb920372fc48a7bb7bfa0c29b23c26c69",
+    "src/components/EmploymentModal.tsx": "8556eca2c77d238429460311b8c810a29fbbb7fccbd40a92df9bfd4f84f45344",
+    "src/main.tsx": "850366f90c85638abab2dd52d1f4a39a59a923c569b9af3e8562fafd5feedae3"
+  }
+}
