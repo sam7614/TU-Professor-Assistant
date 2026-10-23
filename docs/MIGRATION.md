@@ -44,3 +44,10 @@
 - 교수자용 소스를 정리한 저장소: sam7614/TU-Professor-Assistant
 
 운영 주소와 코드 저장소의 연결이 달랐음을 확인했다. 빌드 검증 후 같은 Vercel 프로젝트를 정리된 교수자용 저장소에 연결해 반복 개발·배포 경로를 일치시키는 것을 이관 범위로 한다.
+
+
+## Git 연결 변경 확인
+
+로컬 빌드·주요 화면 검증 후 Vercel CLI의 git connect로 기존 프로젝트를 sam7614/TU-Professor-Assistant에 연결했다. 프로젝트 메타데이터를 다시 읽어 repository=TU-Professor-Assistant, org=sam7614, productionBranch=main임을 확인했다. 기존 도메인과 프로젝트 ID는 유지했다.
+
+Vercel CLI가 생성한 .vercel과 로컬 환경 파일은 Git 및 업로드 제외 대상이다. 자동 배포의 READY 상태와 실제 공개 화면은 이번 변경의 원격 빌드 후 확인하고 연구 기록에 남긴다.

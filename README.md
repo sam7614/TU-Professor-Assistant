@@ -52,7 +52,7 @@ vercel.json                Vercel 빌드 설정
 
 위 빌드 명령은 `vercel.json`에도 명시했습니다. 프로젝트 설정이 다른 폴더를 가리키거나 도메인이 다른 저장소에 연결되어 있으면 별도로 수정해야 합니다. ZIP을 업로드하거나 수동으로 풀 필요가 없습니다.
 
-기존 운영 프로젝트는 `sam7614s-projects/micro-degree-student`이며, 이관 전에는 `sam7614/micro-degree-student` 저장소에 연결되어 있었습니다. 정리된 교수자용 소스의 빌드 검증 후 이 프로젝트의 Git 연결을 본 저장소에 맞춥니다. 진행 결과는 `docs/MIGRATION.md`에 기록합니다.
+기존 운영 프로젝트는 `sam7614s-projects/micro-degree-student`이며, 이관 전에는 `sam7614/micro-degree-student` 저장소에 연결되어 있었습니다. 2026-10-23 로컬 빌드 검증 후 같은 Vercel 프로젝트의 Git 연결을 본 저장소의 `main`으로 변경·확인했습니다. 이후 `main`에 푸시하면 기존 운영 주소의 자동 배포가 실행됩니다. 배포 상태를 확인한 뒤 결과를 연구 기록에 남깁니다.
 
 ## 환경 설정
 

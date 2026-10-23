@@ -46,3 +46,4 @@ ENV/
 .vercel/
 playwright-report/
 test-results/
+.env*
