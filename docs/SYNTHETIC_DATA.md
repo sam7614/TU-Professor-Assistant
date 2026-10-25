@@ -9,3 +9,7 @@
 - 구글시트 수정 후 지금 동기화 또는 활성 화면60초 주기로 갱신한다. [연결·입력 규격](GOOGLE_SHEET_SYNC.md)을 따른다.
 - 연구 저장소 scripts/generate-synthetic-students.cjs의 기본 생성 수와 상한도 1,000건이다. 생성 결과를 편집 중인 시트에 자동으로 덮어쓰지 않는다.
 - 이름·SYN 식별자·example.invalid 연락처·분기와 점수는 합성이다. 점수·관계·정서는 검증된 관찰 자료가 아니며 실제 요구·효과·AI 정확도·실증 표본 수로 해석하지 않는다.
+
+## 현재 운영 데이터: TU 교육과정 연결 버전
+
+2026-10-25부터 운영·fallback은 tu-matched-synthetic-v1이다. 공식4단과대학·24학과·234모듈·907로드맵 항목에 합성학생1,000명과 이수 항목3,789건을 연결했다. 학점/평점은 선택모듈 수록 과목만 포함한다. 이전18/130학점 가정과4대표모듈 fixture는 이력이다. 기존 generator로 현재 시트나 fallback을 덮어쓰지 않는다. 재현 추출/매칭 코드는 Project_B scripts/extract-tu-curriculum.py 및 scripts/match-tu-students.py이며 원본은 현재 Sheet다. 프로필의 scenario는 이전 UI 검증용 분기 식별자이며 재매칭 후 이수율·성적 상태를 보장하는 레이블이 아니다. 실제 참여자는0명이다.

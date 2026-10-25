@@ -18,8 +18,8 @@ test('quoted CSV supports BOM, Unicode, CRLF, escaped quotes and embedded newlin
 });
 test('active students are mapped and progress is recalculated from editable credits',()=>{
  const result=studentsFromCsv(csv([{...base,moduleCreditsEarned:3},{...demo[1],active:false}]));
- assert.equal(result.totalRows,2);assert.equal(result.students.length,1);assert.equal(result.students[0].progress,17);
- assert.equal(result.students[0].creditsEarned,9);assert.equal(result.revision.length,64);
+ assert.equal(result.totalRows,2);assert.equal(result.students.length,1);assert.equal(result.students[0].progress,Math.round(3/base.moduleCreditsRequired*100));
+ assert.equal(result.students[0].creditsEarned,base.creditsEarned);assert.equal(result.revision.length,64);
  assert(result.students[0].email.endsWith('@example.invalid'));
 });
 test('non-synthetic data, duplicate ids, invalid numbers, impossible credits/dates and empty cohort fail atomically',()=>{
