@@ -1,0 +1,3 @@
+﻿active,synthetic,id,name,department,grade,module,moduleCreditsEarned,moduleCreditsRequired,creditsEarned,totalCredits,gpa,attendance,status,careerGoal,midtermScore,finalScore,assignmentScore,projectScore,participationScore,socialScore,lastConsultation,scenario,reflection,planChangeReason,prerequisiteMet,plannedSemesterCredits,selectedModules
+True,True,SYN-0000001,가상학생 0000001,컴퓨터공학과,1,AI-SW MD,9,18,9,130,1.64,96,Good,AI 연구원,51,66,82,73,97,70,2026.10.06,normal,[합성] 다음 학기 이수 계획을 교수자와 검토할 예정인 시나리오,,True,18,AI-SW MD
+True,True,SYN-0000002,가상학생 0000002,소프트웨어학과,1,빅데이터 경영,6,18,6,130,2.99,80,Good,데이터 분석가,41,52,75,48,51,81,2026.10.13,normal,[합성] 다음 학기 이수 계획을 교수자와 검토할 예정인 시나리오,,True,18,빅데이터 경영

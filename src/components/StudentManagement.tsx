@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Download
 } from 'lucide-react';
-import { STUDENTS } from '../constants';
+import { useStudentData } from '../StudentData';
 import { Student } from '../types';
 
 interface StudentManagementProps {
@@ -19,6 +19,7 @@ interface StudentManagementProps {
 }
 
 const StudentManagement: React.FC<StudentManagementProps> = ({ onOpenStudentModal }) => {
+  const {students: STUDENTS} = useStudentData();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedModule, setSelectedModule] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');

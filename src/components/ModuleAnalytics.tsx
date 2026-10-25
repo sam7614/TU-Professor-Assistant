@@ -26,11 +26,13 @@ import {
   Activity,
   Briefcase
 } from 'lucide-react';
-import { MODULE_TRENDS, MODULE_COMPETENCIES, CHART_DATA, EMPLOYMENT_INTERVIEWS } from '../constants';
+import { MODULE_TRENDS, MODULE_COMPETENCIES, EMPLOYMENT_INTERVIEWS } from '../constants';
+import { useStudentData } from '../StudentData';
 import StatCard from './StatCard';
 import EmploymentModal from './EmploymentModal';
 
 const ModuleAnalytics: React.FC = () => {
+  const {chartData: CHART_DATA} = useStudentData();
   const [selectedEmploymentModule, setSelectedEmploymentModule] = useState<string | null>(null);
 
   const handleOpenEmploymentModal = (moduleName: string) => {

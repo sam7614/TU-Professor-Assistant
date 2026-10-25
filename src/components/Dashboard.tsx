@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import StatCard from './StatCard';
-import { STUDENTS, CHART_DATA } from '../constants';
+import { useStudentData } from '../StudentData';
 import { Student } from '../types';
 
 interface DashboardProps {
@@ -20,6 +20,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
+  const {students: STUDENTS, chartData: CHART_DATA} = useStudentData();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredStudents = STUDENTS.filter(s => 
@@ -35,7 +36,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">합성 학생 시나리오 현황</h2>
-          <p className="text-gray-500 mt-1 text-sm">고정 합성 데이터 256건 · 실제 학생·조사 결과가 아닙니다</p>
+          <p className="text-gray-500 mt-1 text-sm">합성 학생 {STUDENTS.length}건 · 실제 학생·조사 결과가 아닙니다</p>
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="relative w-full md:w-72 group">

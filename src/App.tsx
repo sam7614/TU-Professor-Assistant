@@ -18,18 +18,21 @@ import ConsultationAdvisor from './components/ConsultationAdvisor';
 import ModuleAnalytics from './components/ModuleAnalytics';
 import { MOCK_MESSAGES } from './constants';
 import { Student } from './types';
+import { StudentSyncPanel, useStudentData } from './StudentData';
 
 function App() {
   const [currentView, setCurrentView] = useState<'dashboard' | 'students' | 'consultation' | 'analytics'>('dashboard');
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const { students } = useStudentData();
+  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
+  const selectedStudent = students.find(student => student.id === selectedStudentId) || null;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleOpenModal = (student: Student) => {
-    setSelectedStudent(student);
+    setSelectedStudentId(student.id);
   };
 
   const handleCloseModal = () => {
-    setSelectedStudent(null);
+    setSelectedStudentId(null);
   };
 
   const handlePrint = () => {
@@ -144,7 +147,8 @@ function App() {
 
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto h-full p-4 md:p-6 lg:p-8 custom-scrollbar relative">
-            <p className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">합성 데이터 데모 · 학생 256건 · 상담·AI 설명·관계·취업 통계는 실제 관찰 결과가 아닙니다.</p>
+            <p className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">합성 데이터 데모 · 학생 {students.length}건 · 상담·AI 설명·관계·취업 통계는 실제 관찰 결과가 아닙니다.</p>
+            <StudentSyncPanel />
             {currentView === 'dashboard' && (
               <Dashboard onOpenStudentModal={handleOpenModal} />
             )}

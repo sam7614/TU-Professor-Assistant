@@ -29,7 +29,7 @@ import {
   Users,
   Filter
 } from 'lucide-react';
-import { STUDENTS, NETWORK_NODES, NETWORK_LINKS } from '../constants';
+import { useStudentData } from '../StudentData';
 import { NetworkNode, NetworkLink } from '../types';
 
 interface ConsultationAdvisorProps {}
@@ -42,6 +42,7 @@ interface NetworkGraphProps {
 }
 
 const ConsultationAdvisor: React.FC<ConsultationAdvisorProps> = () => {
+  const {students: STUDENTS, networkNodes: NETWORK_NODES, networkLinks: NETWORK_LINKS} = useStudentData();
   const [activeView, setActiveView] = useState<'individual' | 'network'>('individual');
   const [selectedStudentId, setSelectedStudentId] = useState<string>(STUDENTS[0].id);
   const [searchTerm, setSearchTerm] = useState('');
