@@ -54,7 +54,7 @@ function App() {
               </div>
               TU 교수 지원
             </h1>
-            <p className="text-xs text-gray-400 mt-2 font-medium ml-1">AI 학습설계 어시스턴트 · 예시 데이터</p>
+            <p className="text-xs text-gray-400 mt-2 font-medium ml-1">AI 학습설계 어시스턴트 · 고정 합성 데이터</p>
           </div>
 
           <nav className="flex-1 px-4 space-y-1.5">
@@ -144,6 +144,7 @@ function App() {
 
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto h-full p-4 md:p-6 lg:p-8 custom-scrollbar relative">
+            <p className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">합성 데이터 데모 · 학생 256건 · 상담·AI 설명·관계·취업 통계는 실제 관찰 결과가 아닙니다.</p>
             {currentView === 'dashboard' && (
               <Dashboard onOpenStudentModal={handleOpenModal} />
             )}

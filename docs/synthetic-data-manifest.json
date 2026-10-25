@@ -1,0 +1,73 @@
+{
+  "datasetVersion": "pb-synthetic-v1",
+  "synthetic": true,
+  "empiricalParticipants": 0,
+  "seed": 20261025,
+  "count": 20000,
+  "demoCount": 256,
+  "generator": "scripts/generate-synthetic-students.cjs",
+  "generatorSha256": "7af4caac9be243cff45edb3220fb021015dc87083c43a247c95faedafc84ac31",
+  "referenceDate": "2026-10-25",
+  "distribution": "Constructed scenario coverage; not estimated from real students. Uniform designed strata; other fields use a seeded LCG.",
+  "allowedUses": [
+    "software fixtures",
+    "scenario walkthrough",
+    "analysis pipeline dry-run",
+    "local scalability measurement"
+  ],
+  "excludedClaims": [
+    "actual learner needs",
+    "population estimates",
+    "educational effectiveness",
+    "AI predictive accuracy in real students",
+    "validated psychological traits",
+    "formal differential privacy"
+  ],
+  "referenceScale": {
+    "records": 20000,
+    "source": "https://doi.org/10.1038/s41598-026-44990-8",
+    "note": "Scale precedent only; not a sample-size justification or reproduction of its 85 features, methods or results."
+  },
+  "byScenario": {
+    "normal": 1264,
+    "low-progress": 1264,
+    "requested": 1248,
+    "waiting": 1248,
+    "completed": 1248,
+    "near-completion": 1248,
+    "career-undecided": 1248,
+    "reflection-missing": 1248,
+    "plan-changed": 1248,
+    "prerequisite-gap": 1248,
+    "credit-overload": 1248,
+    "inactive": 1248,
+    "high-achievement": 1248,
+    "cross-module": 1248,
+    "new-entry": 1248,
+    "data-review": 1248
+  },
+  "files": {
+    "students.json": {
+      "sha256": "a7f79e344d6d721d75bc4a5c9cac05964ae025cf1cecf34abdb0c6d71c5b10ec",
+      "bytes": 32918396
+    },
+    "students.csv": {
+      "sha256": "84d2ed5dea405194b7ff0317e6e46094be07ea2882bcd3d6ebe2fd8ffc31da01",
+      "bytes": 2740644
+    },
+    "demo-students.json": {
+      "sha256": "b066c1d7d2580b38c92da98f433b69aaa254c3be90ba5256291379473f7a4e1e",
+      "bytes": 521251
+    },
+    "negative-cases.json": {
+      "sha256": "b1ce5464329859025738b06745b1c1fde0c19b05710b27cd81b8b8ad72d5cce4",
+      "bytes": 3239
+    }
+  },
+  "appIntegration": {
+    "bundledRecords": 256,
+    "transformation": "First 256 generated records; peerGroup becomes next record at index (i+16)%256. This fixed same-grade ring is illustrative only.",
+    "appDataSha256": "557fd263c03b41b59ce5c53915a1f504235cf62a0e7c36223a00b64c6391cd31",
+    "fullCohortBundled": false
+  }
+}

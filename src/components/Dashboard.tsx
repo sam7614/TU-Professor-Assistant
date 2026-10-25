@@ -34,8 +34,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">2025학년도 1학기 지도학생 현황</h2>
-          <p className="text-gray-500 mt-1 text-sm">AI-SW 융합전공 및 컴퓨터공학과 모듈 이수 현황 대시보드</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">합성 학생 시나리오 현황</h2>
+          <p className="text-gray-500 mt-1 text-sm">고정 합성 데이터 256건 · 실제 학생·조사 결과가 아닙니다</p>
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="relative w-full md:w-72 group">
@@ -60,7 +60,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
         <StatCard 
           metric={{
             label: '총 지도 학생',
-            value: 42,
+            value: STUDENTS.length,
             unit: '명',
             colorClass: 'bg-blue-50 text-blue-600',
             icon: <Users size={24} />
@@ -69,31 +69,29 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
         <StatCard 
           metric={{
             label: '평균 모듈 이수율',
-            value: 68,
+            value: Math.round(STUDENTS.reduce((sum, student) => sum + student.progress, 0) / STUDENTS.length),
             unit: '%',
-            trend: '전학기 대비 5% 증가',
-            trendUp: true,
+            trend: '표시 중인 합성 학생 기준',
             colorClass: 'bg-green-50 text-green-600',
             icon: <TrendingUp size={24} />
           }} 
         />
         <StatCard 
           metric={{
-            label: '상담 필요 (이수부진)',
-            value: 5,
+            label: '진도율 30% 미만 (합성)',
+            value: STUDENTS.filter(student => student.progress < 30).length,
             unit: '명',
-            trend: '진도율 30% 미만 경고',
+            trend: '데모 조건 · 실제 위험 판단 아님',
             colorClass: 'bg-red-50 text-red-600',
             icon: <AlertCircle size={24} />
           }}
-          onClick={() => alert('Filter logic here')}
         />
         <StatCard 
           metric={{
             label: '상담 신청 대기',
-            value: 3,
+            value: STUDENTS.filter(student => student.status === 'Request' || student.status === 'Waiting').length,
             unit: '건',
-            trend: '최근: 오늘 10:00',
+            trend: 'Request 또는 Waiting 상태',
             colorClass: 'bg-purple-50 text-purple-600',
             icon: <Clock size={24} />
           }} 

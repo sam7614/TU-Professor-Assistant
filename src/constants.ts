@@ -1,117 +1,10 @@
 
 import { Student, ChartData, Message, NetworkNode, NetworkLink, EmploymentInterview } from './types';
 
-// Helper to generate random data
-const firstNames = ['민준', '서준', '도윤', '예준', '시우', '하준', '지호', '지유', '서연', '민서', '하은', '지우', '수아', '서현', '예은', '유진', '현우', '건우', '우진', '선우', '정우', '준혁', '승우', '지훈', '현준', '은우', '지아', '서아', '채원', '지수'];
-const lastNames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '전', '홍'];
-
-const departments = ['컴퓨터공학과', '소프트웨어학과', 'AI융합학과'];
-const modules = ['AI-SW MD', '빅데이터 경영', '디지털마케팅', '스마트팩토리'];
-const careers = ['AI 연구원', '웹 개발자', '데이터 분석가', '클라우드 엔지니어', '보안 전문가', 'PM/기획자', '대학원 진학', '창업'];
-const statuses: ('Good' | 'Warning' | 'Request' | 'Waiting')[] = ['Good', 'Good', 'Good', 'Warning', 'Waiting', 'Request'];
-const colors = ['bg-gray-200', 'bg-blue-100', 'bg-red-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100'];
-
-// AI Summary Templates
-const aiTemplates = [
-  {
-    attendance: "출석률이 매우 우수하며 수업 태도가 성실합니다.",
-    trend: "꾸준히 성적이 상승하는 추세입니다.",
-    assign: "과제 완성도가 높고 코드가 깔끔합니다.",
-    network: "학업 중심의 교우 관계가 형성되어 있습니다.",
-    sentiment: 'Positive' as const
-  },
-  {
-    attendance: "간헐적인 지각이 있으나 출석률은 양호합니다.",
-    trend: "이론 과목에 비해 실습 점수가 다소 낮습니다.",
-    assign: "기한은 준수하나 내용 보완이 필요합니다.",
-    network: "다양한 그룹과 어울리며 사교성이 좋습니다.",
-    sentiment: 'Neutral' as const
-  },
-  {
-    attendance: "최근 결석 빈도가 늘어나고 있어 주의가 필요합니다.",
-    trend: "전학기 대비 평점이 하락했습니다.",
-    assign: "과제 제출이 늦거나 미제출 건이 존재합니다.",
-    network: "교내 활동보다는 교외 활동 비중이 큽니다.",
-    sentiment: 'Concern' as const
-  }
-];
-
-const generateStudents = (): Student[] => {
-  const students: Student[] = [];
-  let idCounter = 1;
-
-  for (let grade = 1; grade <= 4; grade++) {
-    for (let i = 0; i < 30; i++) {
-      const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-      const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-      const dept = departments[Math.floor(Math.random() * departments.length)];
-      const module = modules[Math.floor(Math.random() * modules.length)];
-      const status = statuses[Math.floor(Math.random() * statuses.length)];
-      const template = status === 'Good' ? aiTemplates[0] : status === 'Warning' ? aiTemplates[2] : aiTemplates[1];
-
-      // Generate Student ID based on grade
-      const year = 2026 - grade; // 1학년=2025, 4학년=2022
-      const studentId = `${year}${String(Math.floor(Math.random() * 9000) + 1000)}`;
-
-      // Scores randomized based on status
-      const baseScore = status === 'Good' ? 85 : status === 'Warning' ? 50 : 70;
-      const randomScore = () => Math.min(100, Math.max(0, baseScore + Math.floor(Math.random() * 30) - 15));
-
-      students.push({
-        id: String(idCounter++),
-        name: `${lastName}${firstName}`,
-        studentId: studentId,
-        department: dept,
-        grade: grade,
-        module: module,
-        progress: grade === 1 ? Math.floor(Math.random() * 20) + 10 : grade === 4 ? Math.floor(Math.random() * 20) + 80 : Math.floor(Math.random() * 40) + 30,
-        lastConsultation: Math.random() > 0.5 ? `2024.0${Math.floor(Math.random() * 5) + 1}.${Math.floor(Math.random() * 28) + 1}` : null,
-        status: status,
-        gpa: parseFloat((Math.random() * 2.5 + 2.0).toFixed(2)),
-        creditsEarned: (grade - 1) * 35 + Math.floor(Math.random() * 10),
-        totalCredits: 130,
-        generalProgress: Math.min(100, (grade - 1) * 25 + 20),
-        avatarColor: colors[Math.floor(Math.random() * colors.length)],
-        analysis: `현재 ${grade}학년으로 ${module} 트랙을 이수 중입니다. ${template.trend} ${template.attendance}`,
-        email: `${year}${i}@tu.ac.kr`,
-        phone: `010-${Math.floor(Math.random() * 9000) + 1000}-${Math.floor(Math.random() * 9000) + 1000}`,
-        attendance: Math.floor(Math.random() * 20) + 80,
-        midtermScore: randomScore(),
-        finalScore: randomScore(),
-        assignmentScore: randomScore(),
-        projectScore: randomScore(),
-        participationScore: randomScore(),
-        socialScore: Math.floor(Math.random() * 40) + 60,
-        careerGoal: careers[Math.floor(Math.random() * careers.length)],
-        peerGroup: [], // Will populate later
-        consultationTopics: ["진로 상담", "학업 부진", "장학금 문의", "현장 실습"],
-        aiSummary: {
-          attendanceAnalysis: template.attendance,
-          academicTrend: template.trend,
-          assignmentQuality: template.assign,
-          networkIntimacy: template.network,
-          overallSentiment: template.sentiment
-        }
-      });
-    }
-  }
-
-  // Populate peer groups randomly within same grade
-  students.forEach(s => {
-    const peers = students.filter(p => p.grade === s.grade && p.id !== s.id);
-    const peerCount = Math.floor(Math.random() * 3);
-    for(let k=0; k<peerCount; k++) {
-        const randomPeer = peers[Math.floor(Math.random() * peers.length)];
-        if(randomPeer && !s.peerGroup.includes(randomPeer.name)) {
-            s.peerGroup.push(randomPeer.name);
-        }
-    }
-  });
-
-  return students;
-};
-
-export const STUDENTS: Student[] = generateStudents();
+// Generated, fully synthetic fixtures: 4 grades x 4 modules x 16 scenarios.
+// Seed 20261025; research generator in sam7614/Project_B/scripts.
+import syntheticStudents from './data/synthetic-students.json';
+export const STUDENTS: Student[] = syntheticStudents as Student[];
 
 // Generate Chart Data from Students
 const getChartData = () => {
@@ -169,35 +62,14 @@ export const NETWORK_NODES: NetworkNode[] = STUDENTS.map(s => ({
     grade: s.grade
 }));
 
-// Generate Random Links
-// Links usually happen within the same grade, sometimes across
-const generateLinks = (): NetworkLink[] => {
-    const links: NetworkLink[] = [];
-    const linkCount = 200; // Total interactions
-    
-    for(let i=0; i<linkCount; i++) {
-        const source = STUDENTS[Math.floor(Math.random() * STUDENTS.length)];
-        // 80% chance to link with same grade
-        let target;
-        if (Math.random() > 0.2) {
-             const sameGrade = STUDENTS.filter(s => s.grade === source.grade && s.id !== source.id);
-             target = sameGrade[Math.floor(Math.random() * sameGrade.length)];
-        } else {
-             target = STUDENTS[Math.floor(Math.random() * STUDENTS.length)];
-        }
-
-        if (target && source.id !== target.id) {
-            links.push({
-                source: source.id,
-                target: target.id,
-                value: Math.floor(Math.random() * 5) + 1
-            });
-        }
-    }
-    return links;
-};
-
-export const NETWORK_LINKS: NetworkLink[] = generateLinks();
+// Fixed illustrative links derived from the fixture peer names; not observed relationships.
+const studentByName = new Map(STUDENTS.map(student => [student.name, student]));
+export const NETWORK_LINKS: NetworkLink[] = STUDENTS.flatMap(student =>
+  student.peerGroup.flatMap(name => {
+    const peer = studentByName.get(name);
+    return peer && peer.id !== student.id ? [{ source: student.id, target: peer.id, value: 1 }] : [];
+  })
+);
 
 // Module Analytics Data (Static for now, could be calculated)
 export const MODULE_TRENDS = [

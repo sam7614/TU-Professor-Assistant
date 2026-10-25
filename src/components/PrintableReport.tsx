@@ -10,7 +10,7 @@ const PrintableReport: React.FC<PrintableReportProps> = ({ student }) => {
     <div className="hidden print:block fixed inset-0 z-[9999] bg-white p-8">
       <div className="border-b-2 border-black pb-4 mb-6">
         <h1 className="text-3xl font-bold text-center">학생 학습설계 상담 기초자료</h1>
-        <p className="text-center text-gray-600 mt-2">2025학년도 1학기 | 컴퓨터공학과</p>
+        <p className="text-center text-gray-600 mt-2">합성 데이터 시나리오 · 실제 학생 상담 결과 아님</p>
       </div>
 
       <div className="flex justify-between mb-8">
@@ -27,7 +27,7 @@ const PrintableReport: React.FC<PrintableReportProps> = ({ student }) => {
           <table className="w-full text-left">
             <tbody>
               <tr><th className="py-2 w-24 align-top">지도교수</th><td>김교수</td></tr>
-              <tr><th className="py-2 align-top">상담일자</th><td>2025. {new Date().getMonth() + 1}. {new Date().getDate()}.</td></tr>
+              <tr><th className="py-2 align-top">상담일자</th><td>출력일: {new Date().toLocaleDateString('ko-KR')} (상담 실시일 아님)</td></tr>
               <tr><th className="py-2 align-top">총 이수학점</th><td>{student.creditsEarned} / {student.totalCredits}</td></tr>
             </tbody>
           </table>
