@@ -38,4 +38,4 @@
 
 ## 개발·검증
 
-`npm run dev` 또는 `npm run preview`에서 배포와 같은 API 핸들러를 사용한다. `npm test`는 CSV 경계·형식, 잘못된 입력, 중복·합성 제한, 활성 인원 제한, 접근 실패, HTTP 읽기 전용·캐시 정책을 검증한다. `node --experimental-strip-types scripts/check-live-sheet.ts`로 실제 시트 읽기를 점검한다. 브라우저 테스트의 모의 응답 검사와 실제 시트 변경 검증은 연구 기록에서 구분한다.
+`npm run dev` 또는 `npm run preview`에서 배포와 같은 API 핸들러를 사용한다. `npm test`는 CSV 경계·형식, 잘못된 입력, 중복·합성 제한, 활성 인원 제한, 접근 실패, HTTP 읽기 전용·캐시 정책을 검증한다. `npm run check:sheet`로 실제 시트 읽기를 점검한다. 브라우저 테스트의 모의 응답 검사와 실제 시트 변경 검증은 연구 기록에서 구분한다.

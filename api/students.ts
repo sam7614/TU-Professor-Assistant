@@ -1,4 +1,4 @@
-import { DataError, readSheet } from '../server/student-source.ts';
+import { DataError, readSheet } from '../server/student-source.js';
 import config from '../src/data/sheet-config.json' with { type: 'json' };
 
 export default {
