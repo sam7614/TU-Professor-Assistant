@@ -28,8 +28,8 @@ test('non-synthetic data, duplicate ids, invalid numbers, impossible credits/dat
  assert.throws(()=>studentsFromCsv(csv([{...base,active:false}])),/최소 1명/);
  assert.throws(()=>studentsFromCsv(csv([base]).replace('"active"','"id"')),/헤더/);
 });
-test('all 256 fixtures validate, and an excessive active cohort is rejected',()=>{
- assert.equal(studentsFromCsv(csv(demo.map((r:Record<string,unknown>)=>({...r,active:true})))).students.length,256);
+test('all 1000 school fixtures validate, and an excessive active cohort is rejected',()=>{
+ assert.equal(studentsFromCsv(csv(demo.map((r:Record<string,unknown>)=>({...r,active:true})))).students.length,1000);
  const tooMany=Array.from({length:1001},(_,i)=>({...base,id:`SYN-${String(i+1).padStart(7,'0')}`}));
  assert.throws(()=>studentsFromCsv(csv(tooMany)),/1000명/);
 });
