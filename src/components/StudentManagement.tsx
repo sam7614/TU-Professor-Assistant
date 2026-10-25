@@ -21,6 +21,8 @@ interface StudentManagementProps {
 const StudentManagement: React.FC<StudentManagementProps> = ({ onOpenStudentModal }) => {
   const {students: STUDENTS} = useStudentData();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCollege,setSelectedCollege]=useState('All');
+  const [selectedDepartment,setSelectedDepartment]=useState('All');
   const [selectedModule, setSelectedModule] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');
 
@@ -30,9 +32,11 @@ const StudentManagement: React.FC<StudentManagementProps> = ({ onOpenStudentModa
     const matchesModule = selectedModule === 'All' || student.module === selectedModule;
     const matchesStatus = selectedStatus === 'All' || student.status === selectedStatus;
     
-    return matchesSearch && matchesModule && matchesStatus;
+    return matchesSearch && matchesModule && matchesStatus && (selectedCollege==='All'||student.college===selectedCollege) && (selectedDepartment==='All'||student.department===selectedDepartment);
   });
 
+  const colleges=Array.from(new Set(STUDENTS.map(s=>s.college).filter(Boolean)));
+  const departments=Array.from(new Set(STUDENTS.filter(s=>selectedCollege==='All'||s.college===selectedCollege).map(s=>s.department)));
   const modules = Array.from(new Set(STUDENTS.map(s => s.module)));
 
   return (
@@ -57,6 +61,10 @@ const StudentManagement: React.FC<StudentManagementProps> = ({ onOpenStudentModa
         </div>
       </header>
 
+      <div className="mb-3 flex flex-wrap gap-3">
+        <select aria-label="학생 단과대학" className="max-w-full rounded-lg border p-2 text-sm" value={selectedCollege} onChange={e=>{setSelectedCollege(e.target.value);setSelectedDepartment('All');setSelectedModule('All')}}><option value="All">전체 단과대학</option>{colleges.map(c=><option key={c} value={c}>{c}</option>)}</select>
+        <select aria-label="학생 학과" className="max-w-full rounded-lg border p-2 text-sm" value={selectedDepartment} onChange={e=>{setSelectedDepartment(e.target.value);setSelectedModule('All')}}><option value="All">전체 학과</option>{departments.map(d=><option key={d}>{d}</option>)}</select>
+      </div>
       {/* Filters & Search */}
       <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
@@ -149,7 +157,7 @@ const StudentManagement: React.FC<StudentManagementProps> = ({ onOpenStudentModa
                     </div>
                   </td>
                   <td className="p-4">
-                    <div className="text-gray-900 font-medium">{student.department}</div>
+                    <div className="text-gray-900 font-medium">{student.college} · {student.department}</div>
                     <span className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-semibold
                       ${student.module === 'AI-SW MD' ? 'bg-blue-100 text-blue-700' : 
                         student.module === '빅데이터 경영' ? 'bg-purple-100 text-purple-700' :

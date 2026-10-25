@@ -2,6 +2,7 @@ import React, {createContext,useCallback,useContext,useEffect,useMemo,useRef,use
 import {STUDENTS as fallback} from './constants';
 import type {Student,ChartData,NetworkNode,NetworkLink} from './types';
 import sheetConfig from './data/sheet-config.json';
+import curriculum from './data/tu-curriculum.json';
 
 export const SYNC_INTERVAL_MS=60000;
 type SyncState={source:'demo'|'google-sheet';loading:boolean;error:string|null;lastChecked:string|null;lastApplied:string|null;revision:string|null;totalRows:number|null};
@@ -38,7 +39,8 @@ export function StudentDataProvider({children}:{children:React.ReactNode}) {
   },[refresh]);
   const views=useMemo(()=>{
     const modules=['AI-SW MD','빅데이터 경영','디지털마케팅','스마트팩토리'];
-    const chartData=modules.map((module,i)=>({name:['AI-SW','빅데이터','마케팅','팩토리'][i],count:students.filter(s=>s.module===module).length,fill:['#2563eb','#9333ea','#f59e0b','#10b981'][i]}));
+    const legacyChartData=modules.map((module,i)=>({name:['AI-SW','빅데이터','마케팅','팩토리'][i],count:students.filter(s=>s.module===module).length,fill:['#2563eb','#9333ea','#f59e0b','#10b981'][i]}));
+    const chartData=students.some(s=>s.college)?curriculum.colleges.map((c,i)=>({name:['보건복지교육','뷰티예술','건축·디자인','ICT융합'][i],count:students.filter(s=>s.college===c.college).length,fill:['#2563eb','#9333ea','#f59e0b','#10b981'][i]})):legacyChartData;
     const networkNodes=students.map(s=>({id:s.id,name:s.name,val:s.participationScore/5,group:s.department==='컴퓨터공학과'?1:s.department==='소프트웨어학과'?2:3,grade:s.grade}));
     const groups=new Map<number,Student[]>();for(const s of students){const group=groups.get(s.grade)||[];group.push(s);groups.set(s.grade,group);}
     const networkLinks:NetworkLink[]=[];for(const group of groups.values())if(group.length>1)group.forEach((s,i)=>networkLinks.push({source:s.id,target:group[(i+1)%group.length].id,value:1}));

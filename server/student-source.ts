@@ -1,10 +1,11 @@
 import { createHash } from 'node:crypto';
+import curriculum from '../src/data/tu-curriculum.json' with {type:'json'};
 import type { Student } from '../src/types.ts';
 
 export const MAX_ACTIVE = 1000;
 export const MAX_ROWS = 25000;
 export const MAX_BYTES = 16 * 1024 * 1024;
-const MODULES = ['AI-SW MD', '빅데이터 경영', '디지털마케팅', '스마트팩토리'];
+const MODULES = [...new Set(['AI-SW MD', '빅데이터 경영', '디지털마케팅', '스마트팩토리', ...curriculum.modules.map(m=>m.module)])];
 const STATUS = ['Good', 'Warning', 'Request', 'Waiting'];
 const REQUIRED = ['active','synthetic','id','name','department','grade','module','moduleCreditsEarned','moduleCreditsRequired','creditsEarned','totalCredits','gpa','attendance','status','careerGoal','midtermScore','finalScore','assignmentScore','projectScore','participationScore','socialScore','lastConsultation','scenario','reflection','planChangeReason','prerequisiteMet','plannedSemesterCredits','selectedModules'];
 
@@ -64,11 +65,12 @@ export function studentsFromCsv(csv: string) {
       const syntheticFields = {synthetic:true,datasetVersion:'pb-google-sheet-v1',scenario:optionalText('scenario'),moduleCreditsEarned,moduleCreditsRequired,selectedModules,reflection:optionalText('reflection'),planChangeReason:optionalText('planChangeReason'),prerequisiteMet:bool('prerequisiteMet'),plannedSemesterCredits:number('plannedSemesterCredits',0,40,true)};
       const student: Student = {
         id:row.id,studentId:row.id,name:row.name,department:row.department,grade,module:row.module,progress,lastConsultation,status:row.status as Student['status'],
-        gpa:number('gpa',0,4.5),creditsEarned,totalCredits,generalProgress:Math.round(creditsEarned/totalCredits*100),avatarColor:['bg-blue-100','bg-green-100','bg-purple-100','bg-yellow-100'][moduleIndex],
+        gpa:number('gpa',0,4.5),creditsEarned,totalCredits,generalProgress:Math.round(creditsEarned/totalCredits*100),avatarColor:['bg-blue-100','bg-green-100','bg-purple-100','bg-yellow-100'][moduleIndex%4],
         email:`${row.id.toLowerCase()}@example.invalid`,phone:'연락처 없음 (합성)',careerGoal:optionalText('careerGoal')||'',
         attendance:number('attendance',0,100),midtermScore:number('midtermScore',0,100),finalScore:number('finalScore',0,100),assignmentScore:number('assignmentScore',0,100),projectScore:number('projectScore',0,100),participationScore:number('participationScore',0,100),socialScore:number('socialScore',0,100),
         analysis:`[합성 시트 입력] ${row.module} ${moduleCreditsEarned}/${moduleCreditsRequired}학점. 실제 AI 평가가 아닙니다.`,peerGroup:[],consultationTopics:['[합성] 모듈 계획 및 성찰 검토'],
         aiSummary:{attendanceAnalysis:'[합성] 시트 출석 입력값',academicTrend:'[합성] 추세 검증 자료 없음',assignmentQuality:'[합성] 시트 과제 점수',networkIntimacy:'[합성] 실제 교우관계·정서 추론 아님',overallSentiment:'Neutral'},
+        ...(row.moduleId ? {college:row.college, departmentId:row.departmentId, moduleId:row.moduleId, curriculumVersion:row.curriculumVersion,gradedCredits:Number(row.gradedCredits||0)} : {}),
         ...syntheticFields
       };
       students.push(student);
@@ -81,7 +83,7 @@ export function studentsFromCsv(csv: string) {
   return {students,totalRows:matrix.length,revision:createHash('sha256').update(csv).digest('hex')};
 }
 
-export async function readSheet(sheetId: string, gid: string, fetcher: typeof fetch = fetch) {
+export async function readCsvSheet(sheetId: string, gid: string, fetcher: typeof fetch = fetch) {
   if (!/^[a-zA-Z0-9_-]{20,100}$/.test(sheetId) || !/^\d+$/.test(gid)) throw new DataError('시트 연결 설정이 올바르지 않습니다.');
   const url = new URL(`https://docs.google.com/spreadsheets/d/${sheetId}/export`);
   url.searchParams.set('format','csv');url.searchParams.set('gid',gid);url.searchParams.set('_',String(Date.now()));
@@ -92,5 +94,7 @@ export async function readSheet(sheetId: string, gid: string, fetcher: typeof fe
   const reader=response.body?.getReader();if (!reader) throw new DataError('시트 응답이 비어 있습니다.');
   const chunks:Uint8Array[]=[];let size=0;
   while (true) { const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>MAX_BYTES){await reader.cancel();throw new DataError('시트 크기가 16MB 한도를 넘었습니다.');}chunks.push(value); }
-  return studentsFromCsv(Buffer.concat(chunks).toString('utf8'));
+  return Buffer.concat(chunks).toString('utf8');
 }
+
+export async function readSheet(sheetId:string,gid:string,fetcher:typeof fetch=fetch){return studentsFromCsv(await readCsvSheet(sheetId,gid,fetcher));}

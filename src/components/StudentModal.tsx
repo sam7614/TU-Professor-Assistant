@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Student, Message } from '../types';
+import curriculum from '../data/tu-curriculum.json';
 import { 
   X, 
   Printer, 
@@ -66,7 +67,7 @@ const StudentModal: React.FC<StudentModalProps> = ({ student, messages, onClose,
               {student.name.charAt(0)}
             </div>
             <h2 className="text-2xl font-bold text-gray-800">{student.name}</h2>
-            <p className="text-gray-500 text-sm mt-1">{student.studentId} • {student.department}</p>
+            <p className="text-gray-500 text-sm mt-1">{student.studentId} · {student.college} · {student.department}</p>
             <div className="mt-4 flex justify-center gap-2">
               <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full border border-blue-200">
                 {student.module}
@@ -83,11 +84,11 @@ const StudentModal: React.FC<StudentModalProps> = ({ student, messages, onClose,
               <h4 className="font-bold text-gray-700 mb-3 text-sm flex items-center gap-2">학업 성취도</h4>
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="bg-gray-50 rounded-lg p-2">
-                  <p className="text-xs text-gray-500 mb-1">총 평점</p>
-                  <p className="text-xl font-bold text-blue-600">{student.gpa}<span className="text-xs text-gray-400">/4.5</span></p>
+                  <p className="text-xs text-gray-500 mb-1">수록 과목 평점</p>
+                  <p className="text-xl font-bold text-blue-600">{student.gradedCredits===0?"미산출":student.gpa}<span className="text-xs text-gray-400">/4.5</span></p>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-2">
-                  <p className="text-xs text-gray-500 mb-1">취득 학점</p>
+                  <p className="text-xs text-gray-500 mb-1">선택 모듈 취득 학점</p>
                   <p className="text-xl font-bold text-gray-800">{student.creditsEarned}<span className="text-xs text-gray-400">/{student.totalCredits}</span></p>
                 </div>
               </div>
@@ -125,7 +126,7 @@ const StudentModal: React.FC<StudentModalProps> = ({ student, messages, onClose,
               </div>
               <div className="mb-1">
                 <div className="flex justify-between text-xs mb-1.5">
-                  <span className="font-medium text-gray-600">교양 기초</span>
+                  <span className="font-medium text-gray-600">선택 모듈 학점 기준</span>
                   <span className="font-bold text-green-600">{student.generalProgress}%</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
@@ -134,6 +135,11 @@ const StudentModal: React.FC<StudentModalProps> = ({ student, messages, onClose,
               </div>
             </div>
 
+            {student.courseRecords && <section className="rounded-xl border bg-white p-4" aria-label="학생 과목 이수 원자료">
+              <h4 className="mb-2 text-sm font-bold">선택 모듈 교과목 원자료</h4>
+              <p className="mb-2 text-xs text-slate-500">과목·학점·학기는 공식 가이드북, 이수 상태·평점은 합성입니다. 선택 묶음은 한 항목으로 표시합니다.</p>
+              <ul className="space-y-3">{student.courseRecords.map(record=>{const c=curriculum.moduleCourses.find(c=>c.courseRowId===record.courseRowId);return c?<li className="border-t pt-2 text-xs" key={record.courseRowId}><a href={c.sourceUrl} target="_blank" rel="noreferrer" className="font-semibold text-blue-700 underline">{c.courseNameRaw}</a><p className="mt-1">{c.year}학년 {c.semester}학기 · {c.credits}학점{c.choiceGroup?' · 선택 묶음':''}</p><p>{({'completed':'이수','failed':'미이수(F)','in-progress':'수강 중','planned':'계획'})[record.status]} · {record.gradePoint===null?'평점 미산출':`합성 평점 ${record.gradePoint}`}</p></li>:null})}</ul>
+            </section>}
             {/* AI Analysis Summary */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100 relative overflow-hidden">
               <div className="absolute top-0 right-0 p-2 opacity-10">

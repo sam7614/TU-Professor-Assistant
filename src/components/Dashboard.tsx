@@ -206,7 +206,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenStudentModal }) => {
         <div className="flex flex-col gap-6">
           {/* Chart */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="font-bold text-gray-900 mb-6">모듈별 학생 분포</h3>
+            <h3 className="font-bold text-gray-900 mb-6">단과대학별 합성 학생 분포</h3>
             <div className="h-48 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={CHART_DATA}>

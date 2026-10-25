@@ -376,8 +376,8 @@ const ConsultationAdvisor: React.FC<ConsultationAdvisorProps> = () => {
                        <p className="text-sm font-bold text-gray-900">{selectedStudent.careerGoal}</p>
                      </div>
                      <div className="text-right px-4 py-2 bg-gray-50 rounded-xl">
-                       <p className="text-xs text-gray-500 font-bold">총 평점</p>
-                       <p className="text-sm font-bold text-gray-900">{selectedStudent.gpa} / 4.5</p>
+                       <p className="text-xs text-gray-500 font-bold">수록 과목 평점</p>
+                       <p className="text-sm font-bold text-gray-900">{selectedStudent.gradedCredits===0?"미산출":`${selectedStudent.gpa} / 4.5`}</p>
                      </div>
                   </div>
                 </div>

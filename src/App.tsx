@@ -16,7 +16,7 @@ import Dashboard from './components/Dashboard';
 import StudentManagement from './components/StudentManagement';
 import ConsultationAdvisor from './components/ConsultationAdvisor';
 import ModuleAnalytics from './components/ModuleAnalytics';
-import { MOCK_MESSAGES } from './constants';
+
 import { Student } from './types';
 import { StudentSyncPanel, useStudentData } from './StudentData';
 
@@ -147,7 +147,7 @@ function App() {
 
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto h-full p-4 md:p-6 lg:p-8 custom-scrollbar relative">
-            <p className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">합성 데이터 데모 · 학생 {students.length}건 · 상담·AI 설명·관계·취업 통계는 실제 관찰 결과가 아닙니다.</p>
+            <p className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">합성 데이터 데모 · 학생 {students.length}건 · 실제 교육과정에 연결한 합성 학생입니다. 이수·성적·상담·관계는 가상이며 졸업 판정이 아닙니다.</p>
             <StudentSyncPanel />
             {currentView === 'dashboard' && (
               <Dashboard onOpenStudentModal={handleOpenModal} />
@@ -265,7 +265,7 @@ function App() {
       {selectedStudent && (
         <StudentModal 
           student={selectedStudent} 
-          messages={MOCK_MESSAGES}
+          messages={[]}
           onClose={handleCloseModal}
           onPrint={handlePrint}
         />

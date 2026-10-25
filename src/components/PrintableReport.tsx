@@ -19,16 +19,16 @@ const PrintableReport: React.FC<PrintableReportProps> = ({ student }) => {
             <tbody>
               <tr><th className="py-2 w-24 align-top">성명</th><td>{student.name}</td></tr>
               <tr><th className="py-2 align-top">학번</th><td>{student.studentId}</td></tr>
-              <tr><th className="py-2 align-top">현재 학기</th><td>3학년 1학기</td></tr>
+              <tr><th className="py-2 align-top">현재 학기</th><td>{student.grade}학년 · 합성 시나리오</td></tr>
             </tbody>
           </table>
         </div>
         <div className="w-1/2 pl-4 text-right">
           <table className="w-full text-left">
             <tbody>
-              <tr><th className="py-2 w-24 align-top">지도교수</th><td>김교수</td></tr>
+              <tr><th className="py-2 w-24 align-top">지도교수</th><td>미지정</td></tr>
               <tr><th className="py-2 align-top">상담일자</th><td>출력일: {new Date().toLocaleDateString('ko-KR')} (상담 실시일 아님)</td></tr>
-              <tr><th className="py-2 align-top">총 이수학점</th><td>{student.creditsEarned} / {student.totalCredits}</td></tr>
+              <tr><th className="py-2 align-top">선택 모듈 학점</th><td>{student.creditsEarned} / {student.totalCredits}</td></tr>
             </tbody>
           </table>
         </div>
@@ -45,7 +45,7 @@ const PrintableReport: React.FC<PrintableReportProps> = ({ student }) => {
             <p className="mt-2 text-sm">{student.progress}% 완료</p>
           </div>
         </div>
-        <p className="mt-2 text-sm text-gray-600">* 현재 '{student.module}' 과정을 {student.progress}% 이수하였으며, 집중 관리가 필요합니다.</p>
+        <p className="mt-2 text-sm text-gray-600">* 합성 이수 현황입니다. 수록 과목만 포함하며 대학 전체 성적표·졸업 판정이 아닙니다.</p>
       </div>
 
       <div className="mb-8">
@@ -63,7 +63,7 @@ const PrintableReport: React.FC<PrintableReportProps> = ({ student }) => {
       </div>
 
       <div className="text-center mt-12 pt-8">
-        <p className="text-sm mb-12">위 내용에 대하여 지도교수와 상담하였음을 확인합니다.</p>
+        <p className="text-sm mb-12">실제 상담을 진행한 경우에만 아래에 확인 서명합니다.</p>
         <div className="flex justify-around">
           <div>학생 서명: ________________ (인)</div>
           <div>교수 서명: ________________ (인)</div>

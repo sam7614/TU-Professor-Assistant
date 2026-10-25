@@ -11,6 +11,13 @@ export interface AiSummary {
 }
 
 export interface Student {
+  college?: string;
+  departmentId?: string;
+  moduleId?: string;
+  curriculumVersion?: string;
+  gradedCredits?: number;
+  courseRecords?: {courseRowId: string; status: 'completed'|'failed'|'in-progress'|'planned'; gradePoint: number|null}[];
+
   id: string;
   name: string;
   studentId: string;
